@@ -2,34 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Analysis Results</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
 </head>
 <body>
-    <h1>Analysis Results for: {{ video_title }}</h1>
+    <h1 style="text-align: center;">YouTube Comment Sentiment Analysis</h1>
 
-    <h2 style="text-align: center;">Sentiment Visualization</h2>
-    <br>
-    <br>
-    <img src="data:image/png;base64,{{ sentiment_chart }}" alt="Sentiment Chart">
-    <br>
-    <br>
-    <h2 style="text-align: center;">Top Positive Comments</h2>
-    <ul>
-        {% for comment, score in top_positive %}
-            <li>{{ comment|safe }} (Score: {{ score }})</li>
-        {% endfor %}
-    </ul>
+    {% if error %}
+        <h2 style="color: red; text-align: center;">{{ error }}</h2>
+    {% else %}
+        <h2 style="text-align: center;">Sentiment Visualization</h2>
+        <br><br>
+        <img src="data:image/png;base64,{{ sentiment_chart }}" alt="Sentiment Chart">
+        <br><br>
+        <h2 style="text-align: center;">Top Positive Comments</h2>
+        <ul>
+            {% for comment, score in top_positive %}
+                <li>{{ comment }} (Score: {{ score }})</li>
+            {% endfor %}
+        </ul>
 
-    <h2>Top Negative Comments</h2>
-    <ul>
-        {% for comment, score in top_negative %}
-            <li>{{ comment|safe }} (Score: {{ score }})</li>
-        {% endfor %}
-    </ul>
+        <h2>Top Negative Comments</h2>
+        <ul>
+            {% for comment, score in top_negative %}
+                <li>{{ comment }} (Score: {{ score }})</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-
+    <br>
     <a href="/">Go Back</a>
 </body>
 </html>
