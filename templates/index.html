@@ -2,16 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Sentiment Analysis</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>YouTube Sentiment Analysis</h1>
-    <form action="/result" method="post">
-        <label for="video_id">Enter YouTube Video ID:</label>
-        <input type="text" name="video_id" required>
-        <button type="submit">Analyze</button>
-    </form>
+    <div class="container">
+        <div class="header">
+            <h1>YouTube Sentiment Analysis</h1>
+            <p>Discover the emotional tone of YouTube comments</p>
+        </div>
+        
+        <div class="form-container">
+            <form action="/result" method="post">
+                <div class="input-group">
+                    <input type="text" name="video_id" placeholder="Enter YouTube Video ID" required>
+                    <button type="submit">Analyze</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
