@@ -22,8 +22,9 @@ Generates pie charts and bar charts for sentiment distribution.
 
 1️⃣ Clone the Repository
 
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://ankit8jst/YouTube-Sentiment-Analyzer
+.git
+cd YouTube-Sentiment-Analyzer
 
 2️⃣ Install Required Libraries
 
