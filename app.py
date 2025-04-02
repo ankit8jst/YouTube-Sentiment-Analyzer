@@ -150,8 +150,16 @@ def result():
     video_title = fetch_video_title(video_id)
     comments = fetch_comments(video_id)
 
-    if comments is None:
-        return render_template('result.html', video_title=video_title, error="Comments are disabled for this video.")
+    # ✅ Check if comments is an error message (string) instead of a list
+    if isinstance(comments, str):  
+        return render_template(
+            'result.html', 
+            video_title=video_title, 
+            error=comments,  # ✅ Pass the error message to the template
+            sentiment_chart=None, 
+            top_positive=None, 
+            top_negative=None
+        )
 
     sentiment_scores, top_positive, top_negative = analyze_sentiment(comments)
     sentiment_chart = visualize_sentiment(sentiment_scores)
@@ -164,6 +172,7 @@ def result():
         top_negative=top_negative,
         error=None  # No error in this case
     )
+
 
 
 
