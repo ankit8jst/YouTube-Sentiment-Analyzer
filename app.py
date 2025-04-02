@@ -11,7 +11,7 @@ from textblob import TextBlob
 app = Flask(__name__)
 
 # Replace with your YouTube API Key
-YOUTUBE_API_KEY = "YOUR_YOUTUBE_API_KEY"
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 def fetch_video_title(video_id):
     """Fetch the video title from YouTube API."""
