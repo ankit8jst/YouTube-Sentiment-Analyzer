@@ -30,8 +30,8 @@ def fetch_video_title(video_id):
 def fetch_comments(video_id):
     """Fetch comments from a YouTube video using YouTube Data API v3."""
     youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+    
     comments = []
-
     request = youtube.commentThreads().list(
         part="snippet",
         videoId=video_id,
@@ -39,11 +39,16 @@ def fetch_comments(video_id):
     )
     response = request.execute()
 
+    if "items" not in response or len(response["items"]) == 0:
+        print("No comments found for this video. Comments may be disabled.")
+        return None  # Return None instead of an empty list
+
     for item in response["items"]:
         comment = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
         comments.append(comment)
 
     return comments
+
 
 def analyze_sentiment(comments):
     """Analyze sentiment of YouTube comments and store top positive/negative comments."""
