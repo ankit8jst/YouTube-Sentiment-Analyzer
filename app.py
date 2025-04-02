@@ -119,17 +119,22 @@ def result():
 
     video_title = fetch_video_title(video_id)
     comments = fetch_comments(video_id)
-    sentiment_scores, top_positive, top_negative = analyze_sentiment(comments)
 
+    if comments is None:
+        return render_template('result.html', video_title=video_title, error="Comments are disabled for this video.")
+
+    sentiment_scores, top_positive, top_negative = analyze_sentiment(comments)
     sentiment_chart = visualize_sentiment(sentiment_scores)
 
     return render_template(
         'result.html', 
-        video_title=video_title,  # Pass video title
+        video_title=video_title,
         sentiment_chart=sentiment_chart,
         top_positive=top_positive, 
-        top_negative=top_negative
+        top_negative=top_negative,
+        error=None  # No error in this case
     )
+
 
 
 if __name__ == "__main__":
