@@ -27,27 +27,41 @@ def fetch_video_title(video_id):
         return response["items"][0]["snippet"]["title"]
     return "Unknown Video"
 
+from googleapiclient.errors import HttpError
+import json
+
 def fetch_comments(video_id):
-    """Fetch comments from a YouTube video using YouTube Data API v3."""
-    youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
-    
-    comments = []
-    request = youtube.commentThreads().list(
-        part="snippet",
-        videoId=video_id,
-        maxResults=100
-    )
-    response = request.execute()
+    try:
+        request = youtube.commentThreads().list(
+            part="snippet",
+            videoId=video_id,
+            maxResults=100
+        )
+        response = request.execute()
 
-    if "items" not in response or len(response["items"]) == 0:
-        print("No comments found for this video. Comments may be disabled.")
-        return None  # Return None instead of an empty list
+        comments = []
+        for item in response.get("items", []):
+            comment = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
+            comments.append(comment)
 
-    for item in response["items"]:
-        comment = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
-        comments.append(comment)
+        if not comments:
+            return "No comments found or comments are disabled for this video."
 
-    return comments
+        return comments
+
+    except HttpError as e:
+        try:
+            error_message = json.loads(e.content.decode())["error"]["errors"][0]["reason"]
+        except:
+            error_message = str(e)
+
+        if "videoNotFound" in error_message:
+            return "Error: The video could not be found. Please check the video ID."
+        elif "commentsDisabled" in error_message:
+            return "Error: Comments are disabled for this video."
+        else:
+            return f"An unexpected error occurred: {error_message}"
+
 
 
 def analyze_sentiment(comments):
