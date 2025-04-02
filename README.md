@@ -2,6 +2,9 @@
 YouTube Sentiment Analyzer 🎥📊 A Flask-based web app that analyzes YouTube video comments using sentiment analysis. It categorizes comments as Positive, Negative, or Neutral and visualizes results with graphs and charts. Built with Flask, YouTube API, TextBlob, Matplotlib, HTML, CSS. 🚀
 YouTube Sentiment Analysis Tool
 
+📌 LIVE DEMO 
+    https://youtube-sentiment-analyzer-sih0.onrender.com
+
 📌 Overview
 
 This tool analyzes comments from a YouTube video and determines the sentiment of the audience. It categorizes comments into positive, negative, and neutral and provides a visual representation using charts.
