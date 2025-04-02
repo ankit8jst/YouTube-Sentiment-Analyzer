@@ -25,9 +25,10 @@
     <h2>Top Negative Comments</h2>
     <ul>
         {% for comment, score in top_negative %}
-            <li>{{ comment }} (Score: {{ score }})</li>
+            <li>{{ comment|safe }} (Score: {{ score }})</li>
         {% endfor %}
     </ul>
+
 
     <a href="/">Go Back</a>
 </body>
