@@ -12,6 +12,8 @@ app = Flask(__name__)
 
 # Replace with your YouTube API Key
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+
 
 def fetch_video_title(video_id):
     """Fetch the video title from YouTube API."""
@@ -32,7 +34,7 @@ import json
 
 def fetch_comments(video_id):
     try:
-        request = youtube.commentThreads().list(
+        request = youtube.commentThreads().list(  # ✅ Now 'youtube' is defined globally
             part="snippet",
             videoId=video_id,
             maxResults=100
@@ -48,6 +50,20 @@ def fetch_comments(video_id):
             return "No comments found or comments are disabled for this video."
 
         return comments
+
+    except HttpError as e:
+        try:
+            error_message = json.loads(e.content.decode())["error"]["errors"][0]["reason"]
+        except:
+            error_message = str(e)
+
+        if "videoNotFound" in error_message:
+            return "Error: The video could not be found. Please check the video ID."
+        elif "commentsDisabled" in error_message:
+            return "Error: Comments are disabled for this video."
+        else:
+            return f"An unexpected error occurred: {error_message}"
+
 
     except HttpError as e:
         try:
