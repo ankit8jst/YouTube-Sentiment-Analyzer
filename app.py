@@ -51,15 +51,19 @@ def analyze_sentiment(comments):
     positive_comments = []
     negative_comments = []
 
-    for comment in comments:
-        analysis = TextBlob(comment)
-        polarity = analysis.sentiment.polarity
-        sentiment_scores.append(polarity)
+    import html  # Import the html module to unescape characters
 
-        if polarity > 0:
-            positive_comments.append((comment, polarity))
-        elif polarity < 0:
-            negative_comments.append((comment, polarity))
+for comment in comments:
+    processed_comment = html.unescape(comment).replace("\n", "<br>")  # Fix formatting
+    analysis = TextBlob(processed_comment)
+    polarity = analysis.sentiment.polarity
+    sentiment_scores.append(polarity)
+
+    if polarity > 0:
+        positive_comments.append((processed_comment, polarity))
+    elif polarity < 0:
+        negative_comments.append((processed_comment, polarity))
+
 
     # Sort top 3 positive and negative comments based on polarity score
     top_positive = sorted(positive_comments, key=lambda x: x[1], reverse=True)[:10]
