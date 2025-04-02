@@ -51,25 +51,22 @@ def analyze_sentiment(comments):
     positive_comments = []
     negative_comments = []
 
-    import html  # Import the html module to unescape characters
+    for comment in comments:
+        analysis = TextBlob(comment)
+        polarity = analysis.sentiment.polarity
+        sentiment_scores.append(polarity)
 
-for comment in comments:
-    processed_comment = html.unescape(comment).replace("\n", "<br>")  # Fix formatting
-    analysis = TextBlob(processed_comment)
-    polarity = analysis.sentiment.polarity
-    sentiment_scores.append(polarity)
-
-    if polarity > 0:
-        positive_comments.append((processed_comment, polarity))
-    elif polarity < 0:
-        negative_comments.append((processed_comment, polarity))
-
+        if polarity > 0:
+            positive_comments.append((comment, polarity))
+        elif polarity < 0:
+            negative_comments.append((comment, polarity))
 
     # Sort top 3 positive and negative comments based on polarity score
     top_positive = sorted(positive_comments, key=lambda x: x[1], reverse=True)[:10]
     top_negative = sorted(negative_comments, key=lambda x: x[1])[:10]
 
-    return sentiment_scores, top_positive, top_negative
+    return sentiment_scores, top_positive, top_negative  # This should be inside the function
+
 
 def visualize_sentiment(sentiment_scores):
     """Generate a pie chart and bar chart for sentiment distribution and return base64 image data."""
