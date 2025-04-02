@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>Analysis Results for: {{ video_title }}</h1>
+
+    <h2 style="text-align: center;">Sentiment Visualization</h2>
+    <br>
+    <br>
+    <img src="data:image/png;base64,{{ sentiment_chart }}" alt="Sentiment Chart">
+    <br>
+    <br>
+    <h2 style="text-align: center;">Top Positive Comments</h2>
+    <ul>
+        {% for comment, score in top_positive %}
+            <li>{{ comment }} (Score: {{ score }})</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Top Negative Comments</h2>
+    <ul>
+        {% for comment, score in top_negative %}
+            <li>{{ comment }} (Score: {{ score }})</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Go Back</a>
+</body>
+</html>

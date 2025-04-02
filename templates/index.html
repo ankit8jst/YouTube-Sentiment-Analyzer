@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>YouTube Sentiment Analysis</h1>
+    <form action="/result" method="post">
+        <label for="video_id">Enter YouTube Video ID:</label>
+        <input type="text" name="video_id" required>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>
